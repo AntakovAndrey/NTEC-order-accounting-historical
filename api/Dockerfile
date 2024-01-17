@@ -1,17 +1,18 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
-WORKDIR /app
+# Этап установки зависимостей и сборки приложения
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
 
-COPY *.csproj ./
+COPY *.csproj .
 RUN dotnet restore
 
 COPY . .
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Debug -o /app
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+# Этап создания приложения
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
-
-COPY --from=build /app/out .
-
 EXPOSE 80
+
+COPY --from=build /app .
 
 ENTRYPOINT ["dotnet", "api.dll"]
