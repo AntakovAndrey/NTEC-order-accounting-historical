@@ -7,3 +7,20 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:80"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+  
+  sql_server:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: sql_server_container
+    ports:
+      - "1433:1433"
+    init: true
