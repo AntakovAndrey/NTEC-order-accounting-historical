@@ -108,3 +108,6 @@ CREATE TABLE OrderServiceAdditionalParameters (
     FOREIGN KEY (OrderServiceId) REFERENCES OrderServices(OrderServiceId)
 );
 
+INSERT INTO Roles (RoleId, RoleName) VALUES
+(1, 'Admin'),
+(2, 'User');
